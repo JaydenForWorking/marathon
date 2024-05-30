@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 def makingCertificate(text_to_add):
 
     # 打开图像文件
-    image_path = '证书模板.jpg'
+    image_path = '证书模板1.jpg'
     image = Image.open(image_path)
 
     # 确保图像是 RGB 模式，以便支持彩色文本
@@ -25,7 +25,7 @@ def makingCertificate(text_to_add):
     # 指定中文字体和大小
     # font_path = 'simHei.ttf'  # 这里假设你有一个名为simsun的字体文件，它支持中文
     font_path = '方正粗宋简体.ttf'
-    font_size = 12
+    font_size = 80
     font = ImageFont.truetype(font_path, font_size)
 
     # # 要添加到图像上的文本
@@ -46,11 +46,12 @@ def makingCertificate(text_to_add):
     # }
     # 文本的位置
     positions = {
-        '参赛号码': (120, 110),
-        '姓名': (110, 140),
-        '项目': (100, 165),
-        '成绩': (100, 190),
-        '平均配速': (120, 220)
+        '参赛号码': (1000, 850),
+        '姓名': (1000, 1050),
+        '项目': (1000, 1300),
+        '成绩': (1000, 1550),
+        '个人净时': (1000, 1750),
+        '平均配速': (1000, 2050)
     }
 
     # 添加文本到图像
