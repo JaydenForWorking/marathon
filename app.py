@@ -22,7 +22,7 @@ def main():
     if 'name' not in st.session_state:
         st.session_state.name = ''
     if 'sort' not in st.session_state:
-        st.session_state.sort = '5KM'
+        st.session_state.sort = ''
 
     # 初始化小时、分钟和秒的选择列表
     hours = list(range(24))
@@ -70,8 +70,10 @@ def main():
     st.subheader("参赛者个人比赛成绩填写模块：")  # 添加一个二级标题
     st.session_state.number = st.text_input('参赛号码', st.session_state.number)
     st.session_state.name = st.text_input('姓名', st.session_state.name)
-    st.session_state.sort = st.selectbox('项目', ['5KM', '10KM', '15KM'],
-                                            index=['5KM', '10KM', '15KM'].index(st.session_state.sort))
+
+    st.session_state.sort = st.text_input('项目(只需填写公里数)', st.session_state.sort)
+    # st.session_state.sort = st.selectbox('项目', ['5KM', '10KM', '15KM'],
+    #                                         index=['5KM', '10KM', '15KM'].index(st.session_state.sort))
 
     # 创建一个行容器
     st.markdown('<hr>', unsafe_allow_html=True)
@@ -97,19 +99,19 @@ def main():
     # st.session_state.minutes = st.slider('分钟', 0, 59, st.session_state.minutes)
     # st.session_state.seconds = st.slider('秒', 0, 59, st.session_state.seconds)
 
-    # 创建一个行容器
-    st.markdown('<hr>', unsafe_allow_html=True)
-    st.write('平均配速:')
-    col4, col5 = st.columns(2)
-    # 将下拉列表放入容器中
-    with col4:
-        st.session_state.selected_minutes_even = st.number_input('平均配速-分：', min_value=0, max_value=60, value=st.session_state.selected_minutes_even)
-    with col5:
-        st.session_state.selected_seconds_even = st.number_input('平均配速-秒：', min_value=0, max_value=60, value=st.session_state.selected_seconds_even)
-
-    # 显示当前选择的成绩
-    st.write(
-        f'您选择的 [平均配速] 成绩是: {st.session_state.selected_minutes_even:02d}:{st.session_state.selected_seconds_even:02d}')
+    # # 创建一个行容器
+    # st.markdown('<hr>', unsafe_allow_html=True)
+    # st.write('平均配速:')
+    # col4, col5 = st.columns(2)
+    # # 将下拉列表放入容器中
+    # with col4:
+    #     st.session_state.selected_minutes_even = st.number_input('平均配速-分：', min_value=0, max_value=60, value=st.session_state.selected_minutes_even)
+    # with col5:
+    #     st.session_state.selected_seconds_even = st.number_input('平均配速-秒：', min_value=0, max_value=60, value=st.session_state.selected_seconds_even)
+    #
+    # # 显示当前选择的成绩
+    # st.write(
+    #     f'您选择的 [平均配速] 成绩是: {st.session_state.selected_minutes_even:02d}:{st.session_state.selected_seconds_even:02d}')
 
 
 
@@ -120,6 +122,18 @@ def main():
             st.session_state.selected_minutes,
             st.session_state.selected_seconds
         )
+
+        # -----根据上面提供的”项目(公里数)“和”成绩“自动计算”平均配速“------
+        # 将公里数字符串转换为整数
+        kilometers = int(st.session_state.sort)
+        # 将小时、分钟和秒转换为总秒数
+        total_seconds = st.session_state.selected_hours * 3600 + st.session_state.selected_minutes * 60 + st.session_state.selected_seconds
+        # 计算每公里的平均秒数
+        average_seconds_per_kilometer = total_seconds / kilometers
+        # 将平均秒数转换为分钟和秒
+        st.session_state.selected_minutes_even = int(average_seconds_per_kilometer // 60)
+        st.session_state.selected_seconds_even = int(average_seconds_per_kilometer % 60)
+
         performance_even = "{:02d}:{:02d}".format(
             st.session_state.selected_minutes_even,
             st.session_state.selected_seconds_even
@@ -129,7 +143,7 @@ def main():
         text_to_add = {
             '参赛号码': st.session_state.number,
             '姓名': st.session_state.name,
-            '项目': st.session_state.sort,
+            '项目': str(st.session_state.sort)+"公里",
             '成绩': performance,
             '平均配速': performance_even
         }
