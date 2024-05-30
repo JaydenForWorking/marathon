@@ -24,7 +24,7 @@ def makingCertificate(text_to_add):
 
     # 指定中文字体和大小
     # font_path = 'simHei.ttf'  # 这里假设你有一个名为simsun的字体文件，它支持中文
-    font_path = 'fonts/方正粗宋简体.ttf'
+    font_path = '方正粗宋简体.ttf'
     font_size = 12
     font = ImageFont.truetype(font_path, font_size)
 
