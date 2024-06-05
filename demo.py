@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 def makingCertificate(text_to_add):
 
     # 打开图像文件
-    image_path = '证书模板1.jpg'
+    image_path = '证书模板2.jpg'
     image = Image.open(image_path)
 
     # 确保图像是 RGB 模式，以便支持彩色文本
