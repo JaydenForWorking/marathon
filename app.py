@@ -57,7 +57,7 @@ def main():
 
 
     if 'output_path' not in st.session_state:
-        st.session_state.output_path = "certificate_with_text.jpg"
+        st.session_state.output_path = "certificate_with_text1.jpg"
 
 
     # if 'hours' not in st.session_state:
